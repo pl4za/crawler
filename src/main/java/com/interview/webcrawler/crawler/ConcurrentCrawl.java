@@ -44,8 +44,8 @@ public class ConcurrentCrawl extends Crawl {
             final PageDocument document = documentRetriever.getDocument(rootUrl);
 
             for (String url : getUniqueUrls(document)) {
-                if(pageAlreadyVisited(url)) {
-                    logger.info("Crawling page: " + url); //TODO: add test
+                if(pageNotVisited(url)) {
+                    logger.info("Crawling page: " + url); //TODO: add logging test
                     futureWords = futureWords.append(Future.of(() -> getWordsFromUrl(url)));
                     setPageAsVisited(url);
                 } else {
@@ -62,7 +62,7 @@ public class ConcurrentCrawl extends Crawl {
         visitedUrls = visitedUrls.put(url, true);
     }
 
-    private boolean pageAlreadyVisited(String url) {
+    private boolean pageNotVisited(String url) {
         return !visitedUrls.getOrElse(url, false);
     }
 
