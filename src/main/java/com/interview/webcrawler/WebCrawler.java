@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/webcrawler")
@@ -16,19 +17,21 @@ class WebCrawler {
 
     private final Crawl concurrentCrawl;
     private final Crawl singleCrawl;
+    private MessageTransformer messageTransformer;
 
-    public WebCrawler(SingleCrawl singleCrawl, ConcurrentCrawl concurrentCrawl) {
+    public WebCrawler(SingleCrawl singleCrawl, ConcurrentCrawl concurrentCrawl, MessageTransformer messageTransformer) {
         this.concurrentCrawl = concurrentCrawl;
         this.singleCrawl = singleCrawl;
+        this.messageTransformer = messageTransformer;
     }
 
     @RequestMapping(value = "/single-crawl", method = RequestMethod.GET)
     public List<String> crawl(@RequestParam("url") String url) {
-        return singleCrawl.crawl(url).asJava();
+        return singleCrawl.crawl(url).toJavaList();
     }
 
     @RequestMapping(value = "/concurrent-crawl", method = RequestMethod.GET)
-    public List<String> concurrentCrawl(@RequestParam("url") String url) {
-        return concurrentCrawl.crawl(url).asJava();
+    public List<Map> concurrentCrawl(@RequestParam("url") String url) {
+        return messageTransformer.transform(concurrentCrawl.crawl(url)).toJavaList();
     }
 }
