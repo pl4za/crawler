@@ -37,4 +37,14 @@ public class WordRetrieverTest {
 
         assertEquals(wordRetriever.retrieve(pageDocument), List.empty());
     }
+
+    @Test
+    public void itOnlyRetrievesWordsBiggerThan3Characters() {
+        List<String> expected = List.of("your", "base", "belong");
+
+        PageDocument pageDocument = mock(PageDocument.class);
+        when(pageDocument.getText()).thenReturn("All your base are belong to us");
+
+        assertEquals(expected, wordRetriever.retrieve(pageDocument));
+    }
 }

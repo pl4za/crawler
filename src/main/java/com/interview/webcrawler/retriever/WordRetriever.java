@@ -10,7 +10,7 @@ public class WordRetriever implements PageRetriever {
     @Override
     public List<String> retrieve(PageDocument pageDocument) {
         String[] words = getContent(pageDocument);
-        return hasContent(words) ? List.of(words) : List.empty();
+        return hasContent(words) ? List.of(words).filter(word -> word.length() > 3) : List.empty();
     }
 
     private String[] getContent(PageDocument pageDocument) {
