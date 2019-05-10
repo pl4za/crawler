@@ -26,7 +26,7 @@ public class WebCrawlerApplicationIT {
 	public void itCrawlsASinglePage_WhenPageIsValid() throws Exception {
 		String validUrl = "http://asdf.com";
 
-		mockMvc.perform(get("/webcrawler/crawl?url=" + validUrl))
+		mockMvc.perform(get("/webcrawler/single-crawl?url=" + validUrl))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().json("['About','asdf','What','is','asdf','?','asdf','Forums']"));

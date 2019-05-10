@@ -41,15 +41,33 @@ public class ConcurrentCrawl extends Crawl {
 
     private void getWordsForAllUrlsInPage(String rootUrl) {
         try {
-            logger.info("Crawling page: " + rootUrl); //TODO: add test
             final PageDocument document = documentRetriever.getDocument(rootUrl);
-            for (String url : urlRetriever.retrieve(document)) {
-                futureWords = futureWords.append(Future.of(() -> getWordsFromUrl(url)));
+
+            for (String url : getUniqueUrls(document)) {
+                if(pageAlreadyVisited(url)) {
+                    logger.info("Crawling page: " + url); //TODO: add test
+                    futureWords = futureWords.append(Future.of(() -> getWordsFromUrl(url)));
+                    setPageAsVisited(url);
+                } else {
+                    logger.info("Skipping page: " + url);
+                }
                 getWordsForAllUrlsInPage(url);
             }
         } catch (IOException e) {
             logger.debug("Failed to fetch page for: " + rootUrl);
         }
+    }
+
+    private void setPageAsVisited(String url) {
+        visitedUrls = visitedUrls.put(url, true);
+    }
+
+    private boolean pageAlreadyVisited(String url) {
+        return !visitedUrls.getOrElse(url, false);
+    }
+
+    private List<String> getUniqueUrls(PageDocument document) {
+        return urlRetriever.retrieve(document).distinct();
     }
 
     private void saveWords(List<String> wordsFromUrl) {

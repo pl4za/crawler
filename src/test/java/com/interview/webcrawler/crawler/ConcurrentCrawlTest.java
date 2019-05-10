@@ -41,7 +41,7 @@ public class ConcurrentCrawlTest {
     private final String rootPageContent = "rootPageContent";
     private final String subPage1Link = rootUrl + "/subPage1Link";
     private final String subPage1Content = "subPage1Content";
-    private final String subPage2Link = rootUrl + "subPage2Link";
+    private final String subPage2Link = rootUrl + "/subPage2Link";
     private final String subPage2Content = "subPage2Content";
 
     private PageDocument mockDocument(String text, List<String> links) {
@@ -96,5 +96,22 @@ public class ConcurrentCrawlTest {
         when(documentRetriever.getDocument(subPage1Link)).thenThrow(new IOException());
 
         assertEquals(List.of(rootPageContent), concurrentCrawl.crawl(rootUrl));
+    }
+
+    @Test
+    public void itSkipsRepeatedUrls_WhenContainedInSamePage() throws IOException {
+        mockPage(rootPageContent, List.of(subPage1Link, subPage1Link), rootUrl);
+        mockPage(subPage1Content, List.empty(), subPage1Link);
+
+        assertEquals(List.of(rootPageContent, subPage1Content), concurrentCrawl.crawl(rootUrl));
+    }
+
+    @Test
+    public void itSkipsRepeatedUrls_WhenContainedInDifferentPages() throws IOException {
+        mockPage(rootPageContent, List.of(subPage1Link, subPage2Link), rootUrl);
+        mockPage(subPage1Content, List.of(subPage2Link), subPage1Link);
+        mockPage(subPage2Content, List.empty(), subPage2Link);
+
+        assertEquals(List.of(rootPageContent, subPage1Content, subPage2Content), concurrentCrawl.crawl(rootUrl));
     }
 }
