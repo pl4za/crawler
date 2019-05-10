@@ -26,12 +26,12 @@ public class PageDocumentTest {
     @Test
     public void itGetsUrlsFromPage_WhenPageHasUrls() {
         String htmlPageWithUrls = "<div>" +
-                "<a href='/url1.html'> valid url1 </a> " +
-                "<a href='/url2.html'> valid url2 </a>" +
+                "<a href='https://www.example.com/url1.html'> valid url1 </a> " +
+                "<a href='https://www.example.com/url2.html'> valid url2 </a>" +
                 "<a> valid url2 </a>" +
                 "</div>";
         PageDocument pageDocument = new PageDocument(htmlPageWithUrls);
 
-        assertEquals(List.of("/url1.html", "/url2.html"), pageDocument.getUrls());
+        assertEquals(List.of("https://www.example.com/url1.html", "https://www.example.com/url2.html"), pageDocument.getUrls());
     }
 }

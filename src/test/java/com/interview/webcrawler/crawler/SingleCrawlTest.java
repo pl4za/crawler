@@ -1,6 +1,7 @@
-package com.interview.webcrawler;
+package com.interview.webcrawler.crawler;
 
-import com.interview.webcrawler.crawler.SingleCrawl;
+import com.interview.webcrawler.DocumentRetriever;
+import com.interview.webcrawler.PageDocument;
 import com.interview.webcrawler.retriever.WordRetriever;
 import io.vavr.collection.List;
 import org.junit.Before;
@@ -32,19 +33,18 @@ public class SingleCrawlTest {
     private WordRetriever wordRetriever;
 
     private final String rootUrl = "https://www.website.co.uk";
-    private final String rootPageContent = "rootPageContent";
 
-    private PageDocument mockDocument(String text, List<String> links) {
+    private PageDocument mockDocument(List<String> links) {
         PageDocument document = mock(PageDocument.class);
-        when(document.getText()).thenReturn(text);
+        when(document.getText()).thenReturn("rootPageContent");
         when(document.getUrls()).thenReturn(links);
         return document;
     }
 
-    private void mockPage(String pageContent, List<String> urls, String url) throws IOException {
-        PageDocument rootDocument = mockDocument(pageContent, urls);
-        when(documentRetriever.getDocument(url)).thenReturn(rootDocument);
-        when(wordRetriever.retrieve(rootDocument)).thenReturn(List.of(pageContent));
+    private void mockPage(List<String> urls) throws IOException {
+        PageDocument rootDocument = mockDocument(urls);
+        when(documentRetriever.getDocument("https://www.website.co.uk")).thenReturn(rootDocument);
+        when(wordRetriever.retrieve(rootDocument)).thenReturn(List.of("rootPageContent"));
     }
 
     @Before
@@ -54,14 +54,15 @@ public class SingleCrawlTest {
 
     @Test
     public void itCrawlsSinglePageInRootPage() throws Exception {
-        mockPage(rootPageContent, List.empty(), rootUrl);
+        mockPage(List.empty());
 
+        String rootPageContent = "rootPageContent";
         assertEquals(List.of(rootPageContent), singleCrawl.crawl(rootUrl));
     }
 
     @Test
     public void itSkipsPage_WhenPageFetchFails() throws IOException {
-        mockPage(rootPageContent, List.empty(), rootUrl);
+        mockPage(List.empty());
         when(documentRetriever.getDocument(rootUrl)).thenThrow(new IOException());
 
         assertEquals(List.empty(), singleCrawl.crawl(rootUrl));
