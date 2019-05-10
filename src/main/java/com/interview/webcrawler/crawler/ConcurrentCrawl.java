@@ -43,10 +43,9 @@ public class ConcurrentCrawl extends Crawl {
         try {
             logger.info("Crawling page: " + rootUrl); //TODO: add test
             final PageDocument document = documentRetriever.getDocument(rootUrl);
-            for (String path : urlRetriever.retrieve(document)) {
-                final String fullUrl = rootUrl + "/" + path;
-                futureWords = futureWords.append(Future.of(() -> getWordsFromUrl(fullUrl)));
-                getWordsForAllUrlsInPage(fullUrl);
+            for (String url : urlRetriever.retrieve(document)) {
+                futureWords = futureWords.append(Future.of(() -> getWordsFromUrl(url)));
+                getWordsForAllUrlsInPage(url);
             }
         } catch (IOException e) {
             logger.debug("Failed to fetch page for: " + rootUrl);

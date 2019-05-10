@@ -22,7 +22,7 @@ public class PageDocument {
 
         List<String> elements = List.empty();
         for (Element element : a) {
-            String absHref = element.attr("href");
+            String absHref = element.attr("abs:href");
             if (!absHref.isEmpty()) {
                 elements = elements.append(absHref);
             }

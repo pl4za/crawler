@@ -38,9 +38,9 @@ public class ConcurrentCrawlTest {
 
     private final String rootUrl = "https://www.website.co.uk";
     private final String rootPageContent = "rootPageContent";
-    private final String subPage1Link = "subPage1Link";
+    private final String subPage1Link = rootUrl + "/subPage1Link";
     private final String subPage1Content = "subPage1Content";
-    private final String subPage2Link = "subPage2Link";
+    private final String subPage2Link = rootUrl + "subPage2Link";
     private final String subPage2Content = "subPage2Content";
 
     private PageDocument mockDocument(String text, List<String> links) {
@@ -65,7 +65,7 @@ public class ConcurrentCrawlTest {
     @Test
     public void itCrawlsSinglePageInRootPage() throws Exception {
         mockPage(rootPageContent, List.of(subPage1Link), rootUrl);
-        mockPage(subPage1Content, List.empty(), rootUrl + "/" + subPage1Link);
+        mockPage(subPage1Content, List.empty(), subPage1Link);
 
         assertEquals(List.of(rootPageContent, subPage1Content), concurrentCrawl.crawl(rootUrl));
     }
@@ -73,8 +73,8 @@ public class ConcurrentCrawlTest {
     @Test
     public void itCrawlsMultiplePagesInRootPage() throws Exception {
         mockPage(rootPageContent, List.of(subPage1Link, subPage2Link), rootUrl);
-        mockPage(subPage1Content, List.empty(), rootUrl + "/" + subPage1Link);
-        mockPage(subPage2Content, List.empty(), rootUrl + "/" + subPage2Link);
+        mockPage(subPage1Content, List.empty(), subPage1Link);
+        mockPage(subPage2Content, List.empty(), subPage2Link);
 
         assertEquals(List.of(rootPageContent, subPage1Content, subPage2Content), concurrentCrawl.crawl(rootUrl));
     }
@@ -82,8 +82,8 @@ public class ConcurrentCrawlTest {
     @Test
     public void itCrawlsAllPagesInsideAllSubPages_WhenRootPageHasAtLeastOneUrl_AndSubPagesHaveAtLeastOneUrl() throws Exception {
         mockPage(rootPageContent, List.of(subPage1Link), rootUrl);
-        mockPage(subPage1Content, List.of(subPage2Link), rootUrl + "/" + subPage1Link);
-        mockPage(subPage2Content, List.empty(), rootUrl + "/" + subPage1Link + "/" + subPage2Link);
+        mockPage(subPage1Content, List.of(subPage2Link), subPage1Link);
+        mockPage(subPage2Content, List.empty(), subPage2Link);
 
         assertEquals(List.of(rootPageContent, subPage1Content, subPage2Content), concurrentCrawl.crawl(rootUrl));
     }
@@ -91,8 +91,8 @@ public class ConcurrentCrawlTest {
     @Test
     public void itSkipsPage_WhenPageFetchFails() throws IOException {
         mockPage(rootPageContent, List.of(subPage1Link), rootUrl);
-        mockPage(subPage1Content, List.empty(), rootUrl + "/" + subPage1Link);
-        when(documentRetriever.getDocument(rootUrl + "/" + subPage1Link)).thenThrow(new IOException());
+        mockPage(subPage1Content, List.empty(), subPage1Link);
+        when(documentRetriever.getDocument(subPage1Link)).thenThrow(new IOException());
 
         assertEquals(List.of(rootPageContent), concurrentCrawl.crawl(rootUrl));
     }
