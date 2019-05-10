@@ -17,7 +17,7 @@ class WebCrawler {
 
     private final Crawl concurrentCrawl;
     private final Crawl singleCrawl;
-    private MessageTransformer messageTransformer;
+    private final MessageTransformer messageTransformer;
 
     public WebCrawler(SingleCrawl singleCrawl, ConcurrentCrawl concurrentCrawl, MessageTransformer messageTransformer) {
         this.concurrentCrawl = concurrentCrawl;

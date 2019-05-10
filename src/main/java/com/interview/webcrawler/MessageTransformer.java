@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class MessageTransformer {
+class MessageTransformer {
 
-    public List<Map> transform(List wordList) {
+    public List<Map> transform(List wordList) { //TODO: check assignments
         return wordList.map(word -> HashMap.of(
                 "text", word,
                 "value", wordList.count(innerWord -> innerWord.equals(word)))

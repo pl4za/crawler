@@ -38,10 +38,10 @@ public class WebCrawlerTest {
     @MockBean
     private MessageTransformer messageTransformer;
 
-    final String expected = "[{\"text\":\"one\",\"value\":1},{\"text\":\"two\",\"value\":2}]";
+    private final String expected = "[{\"text\":\"one\",\"value\":1},{\"text\":\"two\",\"value\":2}]";
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Map firstObject = HashMap.of("text", "one", "value", 1).toJavaMap();
         Map secondObject = HashMap.of("text", "two", "value", 2).toJavaMap();
         when(messageTransformer.transform(any())).thenReturn(List.of(firstObject, secondObject));

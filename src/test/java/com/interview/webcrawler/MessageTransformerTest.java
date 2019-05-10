@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class MessageTransformerTest {
 
     @Autowired
-    MessageTransformer messageTransformer;
+    private MessageTransformer messageTransformer;
 
     @Test
     public void itTransformstListOfWordsIntoWordCloudFormat() {
