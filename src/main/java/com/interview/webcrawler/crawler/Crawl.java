@@ -1,5 +1,7 @@
-package com.interview.webcrawler;
+package com.interview.webcrawler.crawler;
 
+import com.interview.webcrawler.DocumentRetriever;
+import com.interview.webcrawler.PageDocument;
 import com.interview.webcrawler.retriever.WordRetriever;
 import io.vavr.collection.List;
 import org.slf4j.Logger;
@@ -7,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-abstract class Crawl {
+public abstract class Crawl {
     private final Logger logger = LoggerFactory.getLogger(Crawl.class);
 
     private final DocumentRetriever documentRetriever;
@@ -19,7 +21,7 @@ abstract class Crawl {
         this.wordRetriever = wordRetriever;
     }
 
-    abstract List<String> crawl(String rootUrl);
+    public abstract List<String> crawl(String rootUrl);
 
     List<String> getWordsFromUrl(String rootUrl) {
         try {

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-class DocumentRetriever {
+public class DocumentRetriever {
 
     private final UrlLoader urlLoader;
 
@@ -13,7 +13,7 @@ class DocumentRetriever {
         this.urlLoader = urlLoader;
     }
 
-    PageDocument getDocument(String url) throws IOException {
+    public PageDocument getDocument(String url) throws IOException {
         return new PageDocument(getHtmlPage(url));
     }
 

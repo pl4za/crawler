@@ -1,5 +1,6 @@
 package com.interview.webcrawler;
 
+import com.interview.webcrawler.crawler.ConcurrentCrawl;
 import com.interview.webcrawler.retriever.UrlRetriever;
 import com.interview.webcrawler.retriever.WordRetriever;
 import io.vavr.collection.List;

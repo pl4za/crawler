@@ -1,11 +1,12 @@
-package com.interview.webcrawler;
+package com.interview.webcrawler.crawler;
 
+import com.interview.webcrawler.DocumentRetriever;
 import com.interview.webcrawler.retriever.WordRetriever;
 import io.vavr.collection.List;
 import org.springframework.stereotype.Service;
 
 @Service
-class SingleCrawl extends Crawl {
+public class SingleCrawl extends Crawl {
 
     SingleCrawl(DocumentRetriever documentRetriever, WordRetriever wordRetriever) {
         super(documentRetriever, wordRetriever);

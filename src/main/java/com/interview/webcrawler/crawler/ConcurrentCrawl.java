@@ -1,5 +1,7 @@
-package com.interview.webcrawler;
+package com.interview.webcrawler.crawler;
 
+import com.interview.webcrawler.DocumentRetriever;
+import com.interview.webcrawler.PageDocument;
 import com.interview.webcrawler.retriever.UrlRetriever;
 import com.interview.webcrawler.retriever.WordRetriever;
 import io.vavr.collection.List;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-class ConcurrentCrawl extends Crawl {
+public class ConcurrentCrawl extends Crawl {
     private final Logger logger = LoggerFactory.getLogger(ConcurrentCrawl.class);
     private final UrlRetriever urlRetriever;
     private final DocumentRetriever documentRetriever;

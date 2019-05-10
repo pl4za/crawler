@@ -1,5 +1,8 @@
 package com.interview.webcrawler;
 
+import com.interview.webcrawler.crawler.ConcurrentCrawl;
+import com.interview.webcrawler.crawler.Crawl;
+import com.interview.webcrawler.crawler.SingleCrawl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;

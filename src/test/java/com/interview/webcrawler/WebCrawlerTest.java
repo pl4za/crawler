@@ -1,5 +1,7 @@
 package com.interview.webcrawler;
 
+import com.interview.webcrawler.crawler.ConcurrentCrawl;
+import com.interview.webcrawler.crawler.SingleCrawl;
 import io.vavr.collection.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
