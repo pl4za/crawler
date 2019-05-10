@@ -20,10 +20,10 @@ public class WordRetrieverTest {
     private
     WordRetriever wordRetriever;
 
+    private final List<String> expected = List.of("your", "base", "belong");
+
     @Test
     public void itRetrievesAllWordsFromAPage_WhenAPageHasWords() {
-        List<String> expected = List.of("All", "your", "base", "are", "belong", "to", "us");
-
         PageDocument pageDocument = mock(PageDocument.class);
         when(pageDocument.getText()).thenReturn("All your base are belong to us");
 
@@ -40,8 +40,6 @@ public class WordRetrieverTest {
 
     @Test
     public void itOnlyRetrievesWordsBiggerThan3Characters() {
-        List<String> expected = List.of("your", "base", "belong");
-
         PageDocument pageDocument = mock(PageDocument.class);
         when(pageDocument.getText()).thenReturn("All your base are belong to us");
 

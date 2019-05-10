@@ -29,7 +29,7 @@ public class WebCrawlerApplicationIT {
 		mockMvc.perform(get("/webcrawler/single-crawl?url=" + validUrl))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(content().json("['About','asdf','What','is','asdf','?','asdf','Forums']"));
+				.andExpect(content().json("[{\"text\":\"About\",\"value\":1},{\"text\":\"asdf\",\"value\":3},{\"text\":\"What\",\"value\":1},{\"text\":\"Forums\",\"value\":1}]"));
 	}
 
 }

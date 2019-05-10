@@ -26,8 +26,8 @@ class WebCrawler {
     }
 
     @RequestMapping(value = "/single-crawl", method = RequestMethod.GET)
-    public List<String> crawl(@RequestParam("url") String url) {
-        return singleCrawl.crawl(url).toJavaList();
+    public List<Map> crawl(@RequestParam("url") String url) {
+        return messageTransformer.transform(singleCrawl.crawl(url)).toJavaList();
     }
 
     @RequestMapping(value = "/concurrent-crawl", method = RequestMethod.GET)
