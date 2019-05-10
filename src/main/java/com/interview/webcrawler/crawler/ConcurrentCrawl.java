@@ -41,6 +41,7 @@ public class ConcurrentCrawl extends Crawl {
 
     private void getWordsForAllUrlsInPage(String rootUrl) {
         try {
+            logger.info("Crawling page: " + rootUrl); //TODO: add test
             final PageDocument document = documentRetriever.getDocument(rootUrl);
             for (String path : urlRetriever.retrieve(document)) {
                 final String fullUrl = rootUrl + "/" + path;

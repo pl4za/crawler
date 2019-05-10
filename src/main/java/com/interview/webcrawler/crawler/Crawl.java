@@ -25,6 +25,7 @@ public abstract class Crawl {
 
     List<String> getWordsFromUrl(String rootUrl) {
         try {
+            logger.info("Crawling page: " + rootUrl);
             PageDocument rootDocument = documentRetriever.getDocument(rootUrl);
             return wordRetriever.retrieve(rootDocument);
         } catch (IOException e) {

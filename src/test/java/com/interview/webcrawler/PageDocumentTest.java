@@ -28,6 +28,7 @@ public class PageDocumentTest {
         String htmlPageWithUrls = "<div>" +
                 "<a href='/url1.html'> valid url1 </a> " +
                 "<a href='/url2.html'> valid url2 </a>" +
+                "<a> valid url2 </a>" +
                 "</div>";
         PageDocument pageDocument = new PageDocument(htmlPageWithUrls);
 
